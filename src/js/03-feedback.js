@@ -1,3 +1,5 @@
+import throttle from 'lodash.throttle';
+
 const refs = {
   form: document.querySelector('form'),
   email: document.querySelector('input'),
@@ -5,7 +7,7 @@ const refs = {
   submitBtn: document.querySelector('button'),
 };
 
-refs.form.addEventListener('input', formHandler);
+refs.form.addEventListener('input', throttle(formHandler, 500));
 refs.form.addEventListener('click', submitHandler);
 
 const FORM_INPUT_VALUE = 'feedback-form-state';
