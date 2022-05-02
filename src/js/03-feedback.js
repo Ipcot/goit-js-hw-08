@@ -11,7 +11,10 @@ refs.form.addEventListener('input', throttle(formHandler, 500));
 refs.form.addEventListener('click', submitHandler);
 
 const FORM_INPUT_VALUE = 'feedback-form-state';
-const formInputData = {};
+let formInputData = {
+  email: '',
+  message: '',
+};
 
 restoreValueToForm();
 
@@ -37,10 +40,16 @@ function submitHandler(e) {
     if (getFromStorage(FORM_INPUT_VALUE)) {
       console.clear();
       console.log(getFromStorage(FORM_INPUT_VALUE));
+    } else {
+      console.clear();
+      console.log(formInputData);
     }
     e.currentTarget.reset();
-
     localStorage.removeItem(FORM_INPUT_VALUE);
+    formInputData = {
+      email: '',
+      message: '',
+    };
   }
 }
 
@@ -56,7 +65,7 @@ function save(key, value) {
 function getFromStorage(key) {
   try {
     const valueFromStorage = localStorage.getItem(key);
-    return valueFromStorage === null ? undefined : JSON.parse(valueFromStorage);
+    return valueFromStorage === null ? '' : JSON.parse(valueFromStorage);
   } catch (error) {
     console.error('Get from storage error', error.message);
   }
